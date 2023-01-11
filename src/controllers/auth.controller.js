@@ -3,7 +3,6 @@ const catchAsync = require('../utils/catchAsync');
 // const logger = require('../config/logger');
 
 const { authService, userService, tokenService, emailService } = require('../services');
-const logger = require('../config/logger');
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -55,9 +54,8 @@ const login = catchAsync(async (req, res) => {
 });
 
 const logout = catchAsync(async (req, res) => {
-  logger.info(req.body.refreshToken);
   await authService.logout(req.body.refreshToken);
-  res.status(httpStatus.NO_CONTENT).send();
+  res.status(200).send();
 });
 
 const refreshTokens = catchAsync(async (req, res) => {
