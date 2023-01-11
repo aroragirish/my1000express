@@ -17,19 +17,17 @@ const createUser = async (userBody) => {
 
 const verifyEmailOtp = async (body) => {
   const otpData = await Otp.find({ email: body.email }).sort({ createdAt: -1 }).limit(1);
-  // eslint-disable-next-line no-console
-  console.log(otpData[0], body);
   return Number(body.otp) === Number(otpData[0].otp);
 };
 
 const checkIfUserRegistered = async (email) => {
   const userData = await User.findOne({ email });
-  // eslint-disable-next-line no-console
 
   return userData;
 };
 
 const sendEmailOtp = async (otpCode, body) => {
+  await Otp.deleteOne({ email: body.email });
   const otpData = new Otp({
     email: body.email,
     otp: otpCode,
