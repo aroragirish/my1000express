@@ -40,7 +40,7 @@ const verifyOtp = catchAsync(async (req, res) => {
       });
     }
   } else {
-    res.status(401).send({
+    res.status(403).send({
       message: 'OTP is either invalid or expired',
     });
   }
