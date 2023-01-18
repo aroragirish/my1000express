@@ -16,6 +16,21 @@ const createBusiness = {
   }),
 };
 
+const fetchBusinessByCat = {
+  body: Joi.object().keys({
+    page: Joi.number().required(),
+    perPage: Joi.number(),
+  }),
+};
+
+const approveBusiness = {
+  body: Joi.object().keys({
+    id: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createBusiness,
+  fetchBusinessByCat,
+  approveBusiness,
 };

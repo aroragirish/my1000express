@@ -23,8 +23,18 @@ const upload = multer({
 
 router.route('/').get(businessController.getAllBusiness);
 
-router.route('/category/:category').get(businessController.getAllBusinessByCategory);
-router.route('/:id').get(businessController.getBusinessById);
+router.route('/getBusinessesForUser').get(auth('getBusinessesForUser'), businessController.getBusinessesForUser);
+
+router
+  .route('/category/:category')
+  .post(validate(businessValidation.fetchBusinessByCat), businessController.getAllBusinessByCategory);
+
+router.route('/:id').get(auth('getBusinessById'), businessController.getBusinessById);
+router.route('/delete/:id').delete(auth('deleteBusiness'), businessController.deleteBusiness);
+
+router
+  .route('/approve')
+  .post(auth('approveBusiness'), validate(businessValidation.approveBusiness), businessController.approveBusiness);
 
 router
   .use(upload)

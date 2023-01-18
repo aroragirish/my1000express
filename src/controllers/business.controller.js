@@ -16,14 +16,57 @@ const getAllBusiness = catchAsync(async (req, res) => {
   res.status(200).send(businesses);
 });
 
+const approveBusiness = catchAsync(async (req, res) => {
+  const businesses = await businessService.approveBusiness(req.body.id);
+  res.status(200).send(businesses);
+});
+
+const deleteBusiness = catchAsync(async (req, res) => {
+  const business = await businessService.getBusinessById(req.params.id);
+  if (req.user.role === 'admin') {
+    await await businessService.deleteBusinessById(req.params.id);
+    res.status(200).send({
+      message: 'Business has been deleted',
+    });
+  } else if (business.email === req.user.email) {
+    await await businessService.deleteBusinessById(req.params.id);
+    res.status(200).send({
+      message: 'Business has been deleted',
+    });
+  } else {
+    res.status(403).send({
+      message: 'Unable to delete',
+    });
+  }
+});
+
+const getBusinessesForUser = catchAsync(async (req, res) => {
+  if (req.user.role === 'admin') {
+    const businesses = await businessService.getAllBusinessIncludingUnapproved();
+    res.status(200).send(businesses);
+  } else {
+    const businesses = await businessService.getAllBusinessByUser(req.user.email);
+    res.status(200).send(businesses);
+  }
+});
+
 const getAllBusinessByCategory = catchAsync(async (req, res) => {
-  const businesses = await businessService.getAllBusinessByCategory(req.params.category);
+  const { page, perPage = 6 } = req.body;
+  const businesses = await businessService.getAllBusinessByCategory(req.params.category, page, perPage);
   res.status(200).send(businesses);
 });
 
 const getBusinessById = catchAsync(async (req, res) => {
   const business = await businessService.getBusinessById(req.params.id);
-  res.status(200).send(business);
+  if (business.approved) {
+    res.status(200).send(business);
+  } else if (business.email === req.user.email || req.user.role === 'admin') {
+    res.status(200).send(business);
+  } else {
+    res.status(403).send({
+      message: 'operation not permitted',
+    });
+  }
 });
 // const getUsers = catchAsync(async (req, res) => {
 //   const filter = pick(req.query, ['name', 'role']);
@@ -55,4 +98,7 @@ module.exports = {
   getAllBusiness,
   getAllBusinessByCategory,
   getBusinessById,
+  getBusinessesForUser,
+  deleteBusiness,
+  approveBusiness,
 };
