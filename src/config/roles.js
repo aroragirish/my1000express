@@ -1,7 +1,7 @@
 const allRoles = {
   investor: ['getBusinessById'],
   business: ['addBusiness', 'getBusinessesForUser', 'deleteBusiness', 'getBusinessById'],
-  admin: ['createCategory', 'deleteBusiness', 'getBusinessById', 'getBusinessesForUser', 'approveBusiness'],
+  admin: ['createCategory', 'deleteBusiness', 'getBusinessById', 'getBusinessesForUser', 'approveBusiness', 'addBusiness'],
   superadmin: [],
 };
 

@@ -5,7 +5,7 @@ const { businessService } = require('../services');
 const createBusiness = catchAsync(async (req, res) => {
   const body = {
     ...req.body,
-    image: req.fileName,
+    image: req.file.location,
   };
   const business = await businessService.createBusiness(body);
   res.status(httpStatus.CREATED).send(business);
