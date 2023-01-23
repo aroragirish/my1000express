@@ -2,50 +2,58 @@ const mongoose = require('mongoose');
 
 const businessSchema = mongoose.Schema(
   {
-    title: {
+    logo: {
       type: String,
-      required: true,
-      trim: true,
+      required: false,
     },
     email: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      required: true,
       trim: true,
-      lowercase: true,
     },
     description: {
       type: String,
       required: true,
       trim: true,
     },
+    categoryTags: {
+      type: [String],
+      required: false,
+    },
     category: {
       type: String,
-      required: true,
+      required: false,
     },
-    preTaxReturns: {
+    totalSubscribers: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
     },
-    tenure: {
+    targetToRaise: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
     },
-    tax: {
+    targetAchieved: {
       type: Number,
-      required: true,
-    },
-    tenureDuration: {
-      type: String,
-      required: true,
-      default: 'months',
+      required: false,
+      default: 0,
     },
     minInvestment: {
       type: Number,
       required: true,
     },
-    perShare: {
-      type: Number,
-      required: true,
+    documents: {
+      type: [String],
+      required: false,
+    },
+    keyFeature: {
+      type: String,
+      required: false,
     },
     extraInfo: {
       type: String,
@@ -56,7 +64,37 @@ const businessSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      required: false,
+    },
+    aboutCompany: {
+      tradeName: {
+        type: String,
+        required: true,
+      },
+      incorporationDate: {
+        type: Date,
+        required: true,
+      },
+      firm: {
+        type: String,
+        required: true,
+      },
+      empCount: {
+        type: Number,
+        required: true,
+      },
+      website: {
+        type: String,
+        required: true,
+      },
+      location: {
+        type: String,
+        required: true,
+      },
+      socialMediaLinks: {
+        type: [String],
+        required: true,
+      },
     },
   },
   {
