@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { User } = require('./user.model');
 
 const businessSchema = mongoose.Schema(
   {
@@ -95,6 +96,10 @@ const businessSchema = mongoose.Schema(
         type: [String],
         required: true,
       },
+    },
+    investers: {
+      type: [User],
+      required: false,
     },
   },
   {
