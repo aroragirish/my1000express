@@ -32,7 +32,7 @@ const upload = multer({
       cb(null, `${Date.now().toString()}${ext}`);
     },
   }),
-}).single('image');
+});
 // limit repeated failed requests to auth endpoints
 
 router.route('/').get(businessController.getAllBusiness);
@@ -51,7 +51,7 @@ router
   .post(auth('approveBusiness'), validate(businessValidation.approveBusiness), businessController.approveBusiness);
 
 router
-  .use(upload)
+  .use(upload.fields([{ name: 'documents', maxCount: 5 }, { name: 'image' }]))
   .route('/add-business')
   .post(auth('addBusiness'), validate(businessValidation.createBusiness), businessController.createBusiness);
 

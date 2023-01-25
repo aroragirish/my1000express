@@ -49,7 +49,7 @@ const businessSchema = mongoose.Schema(
       required: true,
     },
     documents: {
-      type: [String],
+      type: [Object],
       required: false,
     },
     keyFeature: {

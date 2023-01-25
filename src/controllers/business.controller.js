@@ -5,8 +5,15 @@ const { businessService } = require('../services');
 const createBusiness = catchAsync(async (req, res) => {
   const body = {
     ...req.body,
-    image: req.file.location,
+    image: req.files.image[0].location,
   };
+  body.documents = req.files.documents.map((doc) => {
+    return {
+      location: doc.location,
+      type: doc.fieldname,
+      name: doc.originalname,
+    };
+  });
   const business = await businessService.createBusiness(body);
   res.status(httpStatus.CREATED).send(business);
 });

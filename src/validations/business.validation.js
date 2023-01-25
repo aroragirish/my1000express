@@ -12,7 +12,7 @@ const createBusiness = {
     targetToRaise: Joi.number(),
     targetAchieved: Joi.number(),
 
-    documents: Joi.array().items(Joi.string()),
+    documents: Joi.string(),
     keyFeature: Joi.string(),
     approved: Joi.boolean(),
     minInvestment: Joi.number().required(),
