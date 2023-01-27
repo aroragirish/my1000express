@@ -6,6 +6,7 @@ const createOrder = catchAsync(async (req, res) => {
   const body = {
     ...req.body,
     user: req?.user?._id,
+    image: req.files.image[0].location,
   };
   const order = await orderService.createOrders(body);
   res.status(httpStatus.CREATED).send(order);
@@ -19,8 +20,6 @@ const getAllOrder = catchAsync(async (req, res) => {
   const orders = await orderService.getAllOrders();
   res.status(200).send(orders);
 });
-
-
 
 module.exports = {
   createOrder,

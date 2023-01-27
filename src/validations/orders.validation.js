@@ -9,6 +9,9 @@ const createOrder = {
       minInvestment: Joi.number(),
     }),
     status: Joi.string().required(),
+    trsId: Joi.string(),
+    description: Joi.string(),
+    image: Joi.string(),
   }),
 };
 

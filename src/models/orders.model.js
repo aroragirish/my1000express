@@ -25,6 +25,18 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    trsId: {
+      type: String,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    image: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
