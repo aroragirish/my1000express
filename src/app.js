@@ -45,8 +45,17 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // enable cors
-app.use(cors());
-app.options('*', cors());
+app.use(
+  cors({
+    origin: 'https://my1000.biz/',
+  })
+);
+app.options(
+  '*',
+  cors({
+    origin: 'https://my1000.biz/',
+  })
+);
 
 // jwt authentication
 app.use(passport.initialize());
