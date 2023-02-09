@@ -1,29 +1,37 @@
 const mongoose = require('mongoose');
-const { User } = require('./user.model');
 
 const orderSchema = mongoose.Schema(
   {
     user: {
       type: String,
-      required: false,
+      required: true,
     },
     business: {
       businessId: {
         type: String,
-        required: false,
+        required: true,
       },
       amountInvested: {
         type: Number,
-        required: false,
+        required: true,
       },
       minInvestment: {
         type: Number,
-        required: false,
+        required: true,
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+      category: {
+        type: String,
+        required: true,
       },
     },
     status: {
       type: String,
       required: true,
+      default: 'Pending',
     },
     trsId: {
       type: String,

@@ -61,4 +61,9 @@ module.exports = {
     },
     from: envVars.EMAIL_FROM,
   },
+  aws: {
+    accessKey: envVars.AWS_ACCESS_KEY,
+    secretKey: envVars.AWS_SECRET_KEY,
+    s3Bucket: envVars.S3_BUCKET_NAME,
+  },
 };

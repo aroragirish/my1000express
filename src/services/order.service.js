@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const { Orders, User } = require('../models');
-const ApiError = require('../utils/ApiError');
+const { Orders } = require('../models');
+const { s3 } = require('./AWSService');
+const config = require('../config/config');
 
 /**
  * Create a user
@@ -16,12 +16,33 @@ const getMyOrders = async (userId) => {
   return orders;
 };
 const getAllOrders = async () => {
-  const orders = await Orders.find({ user: userId });
+  const orders = await Orders.find();
   return orders;
+};
+const deleteOrder = async (_id) => {
+  const order = await Orders.findOne({ _id });
+  if (order.status === 'Pending') {
+    s3.deleteObject(
+      {
+        Key: order.image.split('/').pop(),
+        Bucket: config.aws.s3Bucket,
+      },
+      async (err) => {
+        if (err) {
+          throw new Error(`Unable to delete: ${err}`);
+        } else {
+          return Orders.findOneAndDelete({ _id });
+        }
+      }
+    );
+  } else {
+    throw new Error(`Unable to delete: Order is not pending`);
+  }
 };
 
 module.exports = {
   createOrders,
   getMyOrders,
   getAllOrders,
+  deleteOrder,
 };
