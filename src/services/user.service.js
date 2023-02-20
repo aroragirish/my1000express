@@ -68,6 +68,16 @@ const getUserById = async (id) => {
   return User.findById(id);
 };
 
+const updateBankDetails = async (user, bankDetails) => {
+  const userFromDb = await User.findById(user.id);
+  return userFromDb.updateOne({ bankDetails, bankUpdated: true }, { upsert: true });
+};
+
+const updateKyc = async (user, kycDetails) => {
+  const userFromDb = await User.findById(user.id);
+  return userFromDb.updateOne({ kycDetails }, { upsert: true });
+};
+
 /**
  * Get user by email
  * @param {string} email
@@ -120,4 +130,6 @@ module.exports = {
   sendEmailOtp,
   verifyEmailOtp,
   checkIfUserRegistered,
+  updateKyc,
+  updateBankDetails,
 };

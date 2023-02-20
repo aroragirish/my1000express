@@ -10,6 +10,16 @@ const createUser = {
   }),
 };
 
+const addBank = {
+  body: Joi.object().keys({
+    bankName: Joi.string().required(),
+    branchName: Joi.string().required(),
+    accountNumber: Joi.string().required(),
+    ifsc: Joi.string().required(),
+    holderName: Joi.string().required(),
+  }),
+};
+
 const getUsers = {
   query: Joi.object().keys({
     name: Joi.string(),
@@ -51,4 +61,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  addBank,
 };

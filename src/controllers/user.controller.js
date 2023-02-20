@@ -9,6 +9,16 @@ const createUser = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(user);
 });
 
+const updateKyc = catchAsync(async (req, res) => {
+  const body = {
+    aadhar: req.files.aadhar[0].location,
+    pan: req.files.pan[0].location,
+  };
+
+  const business = await userService.updateKyc(req.user, body);
+  res.status(httpStatus.CREATED).send(business);
+});
+
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
@@ -34,10 +44,17 @@ const deleteUser = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const addBank = catchAsync(async (req, res) => {
+  await userService.updateBankDetails(req.user, req.body);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  addBank,
+  updateKyc,
 };

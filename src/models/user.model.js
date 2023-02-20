@@ -35,6 +35,22 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    bankDetails: {
+      type: Object,
+      required: false,
+    },
+    kycDetails: {
+      type: Object,
+      required: false,
+    },
+    kycDone: {
+      type: Boolean,
+      default: false,
+    },
+    bankUpdated: {
+      type: Boolean,
+      default: false,
+    },
     investments: {
       type: [Business],
       required: false,
