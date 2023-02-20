@@ -49,6 +49,11 @@ const addBank = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const doneKyc = catchAsync(async (req, res) => {
+  await userService.doneKyc(req.params.id);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   createUser,
   getUsers,
@@ -57,4 +62,5 @@ module.exports = {
   deleteUser,
   addBank,
   updateKyc,
+  doneKyc,
 };

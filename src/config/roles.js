@@ -12,6 +12,7 @@ const allRoles = {
     'getOrderById',
     'getOrder',
     'deleteOrder',
+    'updateKyc',
   ],
   superadmin: [],
 };

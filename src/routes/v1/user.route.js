@@ -12,6 +12,8 @@ router
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
+router.route('/done-kyc/:id').get(auth('updateKyc'), userController.doneKyc);
+
 router
   .route('/:userId')
   .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
@@ -19,7 +21,6 @@ router
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router.route('/update-bank-details').post(auth('addBankDetails'), validate(userValidation.addBank), userController.addBank);
-
 router
   .use(upload.fields([{ name: 'pan' }, { name: 'aadhar' }]))
   .route('/update-kyc-documents')

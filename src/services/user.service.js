@@ -87,6 +87,10 @@ const getUserByEmail = async (email) => {
   return User.findOne({ email });
 };
 
+const doneKyc = async (id) => {
+  const userFromDb = await User.findById(id);
+  return userFromDb.updateOne({ kycDone: true }, { upsert: true });
+};
 /**
  * Update user by id
  * @param {ObjectId} userId
@@ -132,4 +136,5 @@ module.exports = {
   checkIfUserRegistered,
   updateKyc,
   updateBankDetails,
+  doneKyc,
 };
