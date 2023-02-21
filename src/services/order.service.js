@@ -31,7 +31,7 @@ const deleteOrder = async (_id) => {
         if (err) {
           throw new Error(`Unable to delete: ${err}`);
         } else {
-          return Orders.updateOne({ status: 'Cancelled' });
+          return order.updateOne({ status: 'Cancelled' });
         }
       }
     );
