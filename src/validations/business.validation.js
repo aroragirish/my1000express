@@ -16,7 +16,9 @@ const createBusiness = {
     keyFeature: Joi.string(),
     approved: Joi.boolean(),
     minInvestment: Joi.number().required(),
-
+    payout: Joi.string().required(),
+    tenure: Joi.number().required(),
+    tenureUnit: Joi.string().required(),
     extraInfo: Joi.string(),
     image: Joi.string(),
     aboutCompany: Joi.object().keys({

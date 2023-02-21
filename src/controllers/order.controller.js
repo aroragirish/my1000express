@@ -25,9 +25,23 @@ const deleteOrder = catchAsync(async (req, res) => {
   const orders = await orderService.getMyOrders(req.user._id);
   res.status(200).send(orders);
 });
+
+const approveOrder = catchAsync(async (req, res) => {
+  const order = await orderService.getOrderById(req.params.orderId);
+  if (order.status === 'Pending') {
+    // await businessService.updateBusinessOrder(order.business);
+    // await userService.updateUserOrder(order.user, order.business);
+  } else {
+    res.status(500).send({
+      message: 'Order is not in pending',
+    });
+  }
+});
+
 module.exports = {
   createOrder,
   getMyOrder,
   getAllOrder,
   deleteOrder,
+  approveOrder,
 };

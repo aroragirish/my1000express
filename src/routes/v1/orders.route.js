@@ -14,5 +14,6 @@ router
 router.delete('/delete/:id', auth('deleteOrder'), orderController.deleteOrder);
 router.route('/get-my-orders').get(auth('getOrderById'), orderController.getMyOrder);
 router.route('/get-All-orders').get(auth('getOrder'), orderController.getAllOrder);
+router.route('/approve-order/:orderId').get(auth('approveOrder'), orderController.approveOrder);
 
 module.exports = router;

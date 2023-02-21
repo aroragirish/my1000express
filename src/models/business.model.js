@@ -29,6 +29,20 @@ const businessSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    payout: {
+      type: String,
+      required: true,
+      default: 'monthly',
+    },
+    tenure: {
+      type: Number,
+      required: true,
+    },
+    tenureUnit: {
+      type: String,
+      required: true,
+      default: 'months',
+    },
     totalSubscribers: {
       type: Number,
       required: false,
@@ -58,6 +72,7 @@ const businessSchema = mongoose.Schema(
     },
     extraInfo: {
       type: String,
+      required: false,
     },
     approved: {
       type: Boolean,

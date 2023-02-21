@@ -15,6 +15,12 @@ const getMyOrders = async (userId) => {
   const orders = await Orders.find({ user: userId });
   return orders;
 };
+
+const getOrderById = async (orderId) => {
+  const order = await Orders.findById(orderId);
+  return order;
+};
+
 const getAllOrders = async () => {
   const orders = await Orders.find();
   return orders;
@@ -45,4 +51,5 @@ module.exports = {
   getMyOrders,
   getAllOrders,
   deleteOrder,
+  getOrderById,
 };
