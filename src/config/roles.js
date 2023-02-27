@@ -1,5 +1,5 @@
 const allRoles = {
-  investor: ['getBusinessById', 'addOrder', 'getOrderById', 'deleteOrder', 'addBankDetails'],
+  investor: ['getBusinessById', 'addOrder', 'getOrderById', 'deleteOrder', 'addBankDetails', 'getUsers'],
   business: ['addBusiness', 'getBusinessesForUser', 'deleteBusiness', 'getBusinessById'],
   admin: [
     'createCategory',
@@ -14,6 +14,8 @@ const allRoles = {
     'deleteOrder',
     'updateKyc',
     'approveOrder',
+    'rejectOrder',
+    'getUsers',
   ],
   superadmin: [],
 };

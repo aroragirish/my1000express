@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const { orderService } = require('../services');
+const { orderService, businessService, userService } = require('../services');
 
 const createOrder = catchAsync(async (req, res) => {
   const body = {
@@ -29,8 +29,24 @@ const deleteOrder = catchAsync(async (req, res) => {
 const approveOrder = catchAsync(async (req, res) => {
   const order = await orderService.getOrderById(req.params.orderId);
   if (order.status === 'Pending') {
-    // await businessService.updateBusinessOrder(order.business);
-    // await userService.updateUserOrder(order.user, order.business);
+    await businessService.updateBusinessForOrderComplete(order.business, order.user);
+    await userService.updateUserForOrderComplete(order.business, order.user);
+    await order.updateOne({ status: 'Completed' });
+    res.status(200).send({
+      message: 'Invesment updated',
+    });
+  } else {
+    res.status(500).send({
+      message: 'Order is not in pending or Minimum amount is not correct',
+    });
+  }
+});
+
+const rejectOrder = catchAsync(async (req, res) => {
+  const { rejectText, id } = req.body;
+  const order = await orderService.getOrderById(id);
+  if (order.status === 'Pending') {
+    await order.updateOne({ rejectText, status: 'Rejected' });
   } else {
     res.status(500).send({
       message: 'Order is not in pending',
@@ -44,4 +60,5 @@ module.exports = {
   getAllOrder,
   deleteOrder,
   approveOrder,
+  rejectOrder,
 };

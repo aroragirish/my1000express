@@ -33,6 +33,10 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: 'Pending',
     },
+    rejectText: {
+      type: String,
+      required: false,
+    },
     trsId: {
       type: String,
       required: false,

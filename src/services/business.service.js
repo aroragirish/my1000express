@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const { Business, User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const { getUserById } = require('./user.service');
 
 /**
  * Create a user
@@ -61,6 +62,33 @@ const approveBusiness = async (_id) => {
   });
 };
 
+const updateBusinessForOrderComplete = async (business, id) => {
+  const businessFromDb = await Business.findById(business.businessId);
+  if (businessFromDb.minInvestment > business.amountInvested) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Minimum amount is wrong!');
+  }
+  const newTargetAchieved = businessFromDb.targetAchieved + business.amountInvested;
+  const newTotalSubscribers = businessFromDb.totalSubscribers + 1;
+  const investorArray = businessFromDb.investers;
+  const userFromDb = await getUserById(id);
+  investorArray.push(userFromDb);
+  const businesses = await Business.findOneAndUpdate(
+    { _id: business.businessId },
+    {
+      targetAchieved: newTargetAchieved,
+      totalSubscribers: newTotalSubscribers,
+      investers: investorArray,
+    },
+    { upsert: false },
+    (err) => {
+      if (err) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Unknown error 123');
+      }
+    }
+  );
+  businesses.save();
+  return businesses;
+};
 module.exports = {
   createBusiness,
   getAllBusiness,
@@ -70,4 +98,5 @@ module.exports = {
   deleteBusinessById,
   getAllBusinessIncludingUnapproved,
   approveBusiness,
+  updateBusinessForOrderComplete,
 };

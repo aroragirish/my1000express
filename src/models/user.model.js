@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
 
-const { Business } = require('./business.model');
-
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -52,8 +50,9 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     investments: {
-      type: [Business],
+      type: [Object],
       required: false,
+      default: [],
     },
   },
   {

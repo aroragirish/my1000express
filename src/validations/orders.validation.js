@@ -17,6 +17,14 @@ const createOrder = {
   }),
 };
 
+const rejectOrder = {
+  body: Joi.object().keys({
+    id: Joi.string().required(),
+    rejectText: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   createOrder,
+  rejectOrder,
 };

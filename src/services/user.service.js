@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { User, Otp } = require('../models');
+const { User, Otp, Business } = require('../models');
 const { sendEmail } = require('./email.service');
 const ApiError = require('../utils/ApiError');
 
@@ -109,6 +109,35 @@ const updateUserById = async (userId, updateBody) => {
   await user.save();
   return user;
 };
+const updateUserForOrderComplete = async (business, userId) => {
+  const user = await getUserById(userId);
+  const businessFromDb = await Business.findById(business.businessId);
+  const investments = user.investments || [];
+  const currentInvestment = {
+    business: businessFromDb,
+    amountInvested: business.amountInvested,
+    investedOn: Date.now(),
+  };
+  investments.push(currentInvestment);
+  if (!user || user.role !== 'investor') {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const userNew = await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      investments,
+    },
+    { upsert: false },
+    (err) => {
+      if (err) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Unknown error 1234');
+      }
+    }
+  );
+  userNew.save();
+  return userNew;
+};
 
 /**
  * Delete user by id
@@ -137,4 +166,5 @@ module.exports = {
   updateKyc,
   updateBankDetails,
   doneKyc,
+  updateUserForOrderComplete,
 };
